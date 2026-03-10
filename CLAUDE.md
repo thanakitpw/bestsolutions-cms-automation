@@ -14,8 +14,8 @@
 - **ห้าม commit และ push ถ้ายังไม่ได้รับคำสั่ง** ไม่ว่าจะทำงานเสร็จแค่ไหน รอให้ user สั่งก่อนเสมอ
 
 ### การใช้ Skills
-- **ใช้ `antigravity` skills ทุกครั้ง** ก่อนลงมือทำงาน โดยเลือก skill ที่เหมาะสมกับงาน เช่น:
-  - งาน frontend/UI → `@antigravity-design-expert`
+- **ใช้ skills ทุกครั้ง** ก่อนลงมือทำงาน โดยเลือก skill ที่เหมาะสมกับงาน เช่น:
+  - งาน frontend/UI → `@ui-ux-pro-max`, `@antigravity-design-expert`
   - งาน Next.js / React → `@nextjs-best-practices`, `@react-best-practices`
   - งาน Supabase → `@supabase-automation`
   - งาน AI / Claude API → `@claude-api`
@@ -27,6 +27,24 @@
   - งาน image processing → `@antigravity-design-expert`
   - debug → `@systematic-debugging`
   - code review → `@code-review-excellence`
+
+### ขั้นตอน Test หลังทำงานเสร็จ (ต้องทำทุกครั้ง)
+
+หลังจาก implement feature ใด ๆ เสร็จ ให้ทำขั้นตอนต่อไปนี้ก่อนรายงาน user ว่าเสร็จ:
+
+1. **TypeScript check** — รัน `npx tsc --noEmit` ต้องผ่านไม่มี error
+2. **ใช้ skill `verification-before-completion`** — ตรวจสอบว่า:
+   - ไฟล์ที่แก้ถูกต้องและครบ
+   - ไม่มี console.log หรือ debug code หลงเหลือ
+   - Import paths ถูกต้องทุกไฟล์
+3. **ใช้ skill `webapp-testing`** สำหรับ UI features — ตรวจสอบ:
+   - Component render ได้ไม่ crash
+   - Form validation ทำงานถูกต้อง
+   - Error state แสดงผลถูกต้อง
+4. **ใช้ skill `playwright-skill`** สำหรับ E2E flow ที่สำคัญ เช่น auth, form submit, navigation
+5. **อัพเดท CHECKLIST.md** — เปลี่ยน `[ ]` → `[x]` และอัพเดท progress count
+
+> **หมายเหตุ:** ถ้า TypeScript check fail หรือ skill ตรวจเจอปัญหา ให้แก้ให้หมดก่อน แล้วค่อยรายงาน user
 
 ### การอัพเดท Checklist
 - ทุกครั้งที่ task เสร็จ ให้อัพเดท [CHECKLIST.md](./CHECKLIST.md) ทันที (เปลี่ยน `[ ]` → `[x]` และอัพเดท progress count)
@@ -270,13 +288,10 @@ POST   /api/publish               — POST/PATCH ไป Supabase blog_posts
 
 ## Development Progress (อัพเดทเมื่อทำ task เสร็จ)
 
-**Phase 1 (Foundation):** 7/9 tasks — dev server: http://localhost:3000
-**Phase 2 (AI Pipeline):** 0/7 tasks
+**Phase 1 (Foundation):** 9/9 tasks ✅ COMPLETE — dev server: http://localhost:3000
+**Phase 2 (AI Pipeline):** 7/7 tasks ✅ COMPLETE
 **Phase 3 (Editor + Publish):** 0/9 tasks
 **Phase 4 (Polish):** 0/4 tasks
-**Overall:** 7/38 tasks (18%)
-
-**Phase 1 pending:**
-- Auth (Supabase email magic link) — เหลือ 1 task สุดท้าย
+**Overall:** 16/38 tasks (42%)
 
 _อัพเดท section นี้ทุกครั้งที่ task เสร็จ_

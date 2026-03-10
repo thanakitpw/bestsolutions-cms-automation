@@ -8,6 +8,9 @@ import { useRouter } from 'next/navigation'
 
 interface Props {
   keywords: Keyword[]
+  totalTokens: number
+  articlesGenerated: number
+  estimatedCostTHB: number
 }
 
 function StatusPill({ status }: { status: KeywordStatus }) {
@@ -60,7 +63,7 @@ function ContentTypeBadge({ type }: { type: string }) {
   )
 }
 
-export default function DashboardClient({ keywords: initialKeywords }: Props) {
+export default function DashboardClient({ keywords: initialKeywords, totalTokens, articlesGenerated, estimatedCostTHB }: Props) {
   const router = useRouter()
   const [keywords, setKeywords] = useState<Keyword[]>(initialKeywords)
   const [search, setSearch] = useState('')
@@ -133,15 +136,8 @@ export default function DashboardClient({ keywords: initialKeywords }: Props) {
   }
 
   const handleAction = (kw: Keyword) => {
-    if (kw.status === 'published' && kw.article_id) {
-      router.push(`/articles/${kw.slug}/edit`)
-    } else if (kw.status === 'draft' || kw.status === 'review') {
-      router.push(`/articles/${kw.slug}/edit`)
-    } else if (kw.status === 'brief-ready') {
-      router.push(`/articles/${kw.slug}/brief`)
-    } else {
-      router.push(`/articles/new?keyword=${kw.id}`)
-    }
+    // Route via /articles/new which resolves the correct ASCII slug safely
+    router.push(`/articles/new?keyword=${kw.id}`)
   }
 
   const getActionLabel = (status: KeywordStatus) => {
@@ -245,6 +241,38 @@ export default function DashboardClient({ keywords: initialKeywords }: Props) {
             </div>
           </div>
         </div>
+
+        {/* Cost Tracking */}
+        {articlesGenerated > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-gradient-to-br from-[#6467f2]/10 to-indigo-50 border border-[#6467f2]/20 p-5 rounded-xl">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="material-symbols-outlined text-[#6467f2] text-xl">bolt</span>
+                <p className="text-slate-600 text-sm font-semibold">Total Tokens Used</p>
+              </div>
+              <p className="text-2xl font-bold text-slate-900">{totalTokens.toLocaleString()}</p>
+              <p className="text-xs text-slate-500 mt-1">จาก {articlesGenerated} บทความที่สร้าง</p>
+            </div>
+            <div className="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 p-5 rounded-xl">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="material-symbols-outlined text-emerald-600 text-xl">payments</span>
+                <p className="text-slate-600 text-sm font-semibold">ค่าใช้จ่ายรวม (ประมาณ)</p>
+              </div>
+              <p className="text-2xl font-bold text-slate-900">฿{estimatedCostTHB.toLocaleString()}</p>
+              <p className="text-xs text-slate-500 mt-1">~฿{articlesGenerated > 0 ? Math.round(estimatedCostTHB / articlesGenerated) : 0}/บทความ</p>
+            </div>
+            <div className="bg-gradient-to-br from-sky-50 to-blue-50 border border-sky-200 p-5 rounded-xl">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="material-symbols-outlined text-sky-600 text-xl">auto_graph</span>
+                <p className="text-slate-600 text-sm font-semibold">เฉลี่ย Tokens/บทความ</p>
+              </div>
+              <p className="text-2xl font-bold text-slate-900">
+                {articlesGenerated > 0 ? Math.round(totalTokens / articlesGenerated).toLocaleString() : '—'}
+              </p>
+              <p className="text-xs text-slate-500 mt-1">target ≤ 80,000 tokens</p>
+            </div>
+          </div>
+        )}
 
         {/* Filter Bar */}
         <div className="flex flex-wrap items-center gap-3">
