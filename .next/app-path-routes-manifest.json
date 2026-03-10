@@ -1,0 +1,11 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/api/keywords/[id]/route": "/api/keywords/[id]",
+  "/api/keywords/import/route": "/api/keywords/import",
+  "/api/keywords/route": "/api/keywords",
+  "/api/keywords/template/route": "/api/keywords/template",
+  "/dashboard/page": "/dashboard",
+  "/favicon.ico/route": "/favicon.ico",
+  "/page": "/"
+}
