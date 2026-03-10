@@ -67,7 +67,10 @@ full:    "9999px"   // rounded-full
 
 ---
 
-### Screens ที่ต้องทำตาม (8 screens)
+### Design Source
+- **stitch_dashboard_seo_studio new.zip** — design ล่าสุด (light mode ทุก screen) ใช้เป็น source of truth
+
+### Screens ที่ต้องทำตาม (7 screens)
 
 #### 1. Dashboard (`/dashboard`)
 - Sidebar ซ้าย (w-64): logo `rocket_launch`, nav items, user profile ล่างสุด

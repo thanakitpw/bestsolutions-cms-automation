@@ -15,7 +15,7 @@ export default function AddKeywordModal({ onClose, onSuccess }: Props) {
     slug: '',
     cluster: '',
     content_type: 'Blog',
-    priority: 'Medium',
+    priority: 'High',
   })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -51,142 +51,151 @@ export default function AddKeywordModal({ onClose, onSuccess }: Props) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
-      <div className="relative w-full max-w-[560px] bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
-        {/* Header */}
-        <header className="flex items-center justify-between border-b border-slate-100 px-6 py-4 sticky top-0 bg-white z-10">
-          <div className="flex items-center gap-3">
-            <div className="flex items-center justify-center size-8 rounded-lg bg-[#6467f2]/10 text-[#6467f2]">
-              <span className="material-symbols-outlined text-[20px]">add_circle</span>
-            </div>
-            <div>
-              <h2 className="text-slate-900 text-lg font-bold leading-tight">เพิ่มคำหลักใหม่</h2>
-              <p className="text-slate-500 text-xs font-normal">SEO Studio Project</p>
-            </div>
-          </div>
-          <button
-            onClick={onClose}
-            className="flex items-center justify-center rounded-full size-8 bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors"
-          >
-            <span className="material-symbols-outlined text-[20px]">close</span>
-          </button>
-        </header>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-200/50">
+      <div className="w-full max-w-[480px] bg-white rounded-xl shadow-2xl overflow-hidden border border-slate-200">
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto">
-          <div className="p-6 space-y-5">
+        {/* Header */}
+        <div className="px-6 py-5 border-b border-slate-100">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-slate-900 text-xl font-bold leading-tight">Add New Keyword</h2>
+              <p className="text-slate-500 text-sm mt-1">เพิ่มรายละเอียดสำหรับบทความ SEO ใหม่ของคุณ</p>
+            </div>
+            <button
+              onClick={onClose}
+              className="text-slate-400 hover:text-slate-600 transition-colors"
+            >
+              <span className="material-symbols-outlined">close</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Form Body */}
+        <form onSubmit={handleSubmit}>
+          <div className="px-6 py-6 space-y-5">
             {error && (
               <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-lg">
                 {error}
               </div>
             )}
 
-            <div className="space-y-2">
-              <label className="block text-slate-700 text-sm font-semibold">ชื่อบทความ</label>
-              <input
+            {/* Article Title */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-slate-700 text-sm font-semibold">
+                Article Title / หัวข้อบทความ
+              </label>
+              <textarea
                 required
-                className="w-full h-12 px-4 rounded-lg border border-slate-200 bg-white text-slate-900 focus:ring-2 focus:ring-[#6467f2]/20 focus:border-[#6467f2] outline-none transition-all placeholder:text-slate-400"
-                placeholder="ระบุชื่อบทความที่ต้องการสร้าง"
+                className="w-full rounded-lg border border-slate-200 focus:border-[#6467f2] focus:ring-2 focus:ring-[#6467f2]/20 text-slate-900 placeholder:text-slate-400 text-sm min-h-[80px] px-3 py-2.5 transition-all resize-none outline-none"
+                placeholder="Enter the full title of your article..."
                 value={form.title}
                 onChange={(e) => handleTitleChange(e.target.value)}
               />
             </div>
 
-            <div className="space-y-2">
-              <label className="block text-slate-700 text-sm font-semibold">คำหลัก (Keyword)</label>
-              <div className="relative">
-                <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">key</span>
-                <input
-                  required
-                  className="w-full h-12 pl-11 pr-4 rounded-lg border border-slate-200 bg-white text-slate-900 focus:ring-2 focus:ring-[#6467f2]/20 focus:border-[#6467f2] outline-none transition-all placeholder:text-slate-400"
-                  placeholder="ระบุคำหลักเป้าหมาย"
-                  value={form.primary_keyword}
-                  onChange={(e) => setForm((p) => ({ ...p, primary_keyword: e.target.value }))}
-                />
-              </div>
+            {/* Primary Keyword */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-slate-700 text-sm font-semibold">
+                Primary Keyword / คีย์เวิร์ดหลัก
+              </label>
+              <input
+                required
+                type="text"
+                className="h-11 w-full rounded-lg border border-slate-200 focus:border-[#6467f2] focus:ring-2 focus:ring-[#6467f2]/20 text-slate-900 placeholder:text-slate-400 text-sm px-3 transition-all outline-none"
+                placeholder="e.g. SEO Best Practices 2024"
+                value={form.primary_keyword}
+                onChange={(e) => setForm((p) => ({ ...p, primary_keyword: e.target.value }))}
+              />
             </div>
 
-            <div className="space-y-2">
-              <label className="block text-slate-700 text-sm font-semibold">สลัก (Slug)</label>
-              <div className="flex items-center">
-                <span className="h-12 px-3 flex items-center bg-slate-50 border border-r-0 border-slate-200 rounded-l-lg text-slate-400 text-sm whitespace-nowrap">
-                  bestsolution.co.th/blog/
-                </span>
+            {/* Slug */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-slate-700 text-sm font-semibold">
+                Slug / ลิงก์ถาวร
+              </label>
+              <div className="relative flex items-center">
                 <input
                   required
-                  className="flex-1 h-12 px-4 rounded-r-lg border border-slate-200 bg-white text-slate-900 focus:ring-2 focus:ring-[#6467f2]/20 focus:border-[#6467f2] outline-none transition-all placeholder:text-slate-400"
-                  placeholder="my-new-article"
+                  type="text"
+                  className="h-11 w-full rounded-lg border border-slate-200 focus:border-[#6467f2] focus:ring-2 focus:ring-[#6467f2]/20 text-slate-900 placeholder:text-slate-400 text-sm px-3 pr-10 transition-all outline-none"
+                  placeholder="seo-best-practices-2024"
                   value={form.slug}
                   onChange={(e) => setForm((p) => ({ ...p, slug: e.target.value }))}
                 />
+                <div className="absolute right-3 text-slate-400">
+                  <span className="material-symbols-outlined text-[20px]">lock</span>
+                </div>
               </div>
             </div>
 
+            {/* Cluster */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-slate-700 text-sm font-semibold">
+                Cluster / กลุ่มเนื้อหา
+              </label>
+              <input
+                required
+                type="text"
+                list="cluster-suggestions"
+                className="h-11 w-full rounded-lg border border-slate-200 focus:border-[#6467f2] focus:ring-2 focus:ring-[#6467f2]/20 text-slate-900 placeholder:text-slate-400 text-sm px-3 transition-all outline-none"
+                placeholder="e.g. AI & Automation"
+                value={form.cluster}
+                onChange={(e) => setForm((p) => ({ ...p, cluster: e.target.value }))}
+              />
+              <datalist id="cluster-suggestions">
+                <option value="AI & Automation" />
+                <option value="Technical SEO & Core Web Vitals" />
+                <option value="Content Marketing" />
+                <option value="Digital Marketing" />
+              </datalist>
+            </div>
+
+            {/* Content Type + Priority */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="block text-slate-700 text-sm font-semibold">กลุ่มเนื้อหา (Cluster)</label>
-                <input
-                  required
-                  className="w-full h-12 px-4 rounded-lg border border-slate-200 bg-white text-slate-900 focus:ring-2 focus:ring-[#6467f2]/20 focus:border-[#6467f2] outline-none transition-all placeholder:text-slate-400"
-                  placeholder="เช่น AI & Automation"
-                  value={form.cluster}
-                  onChange={(e) => setForm((p) => ({ ...p, cluster: e.target.value }))}
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="block text-slate-700 text-sm font-semibold">ประเภทเนื้อหา</label>
+              <div className="flex flex-col gap-1.5">
+                <label className="text-slate-700 text-sm font-semibold">Content Type</label>
                 <select
-                  className="w-full h-12 px-4 rounded-lg border border-slate-200 bg-white text-slate-900 focus:ring-2 focus:ring-[#6467f2]/20 focus:border-[#6467f2] outline-none transition-all"
+                  className="h-11 w-full rounded-lg border border-slate-200 focus:border-[#6467f2] focus:ring-2 focus:ring-[#6467f2]/20 text-slate-900 text-sm px-3 transition-all outline-none"
                   value={form.content_type}
                   onChange={(e) => setForm((p) => ({ ...p, content_type: e.target.value }))}
                 >
-                  <option value="Blog">Blog</option>
+                  <option value="Blog">Blog Post</option>
                   <option value="Pillar Page">Pillar Page</option>
                   <option value="Landing Page">Landing Page</option>
                 </select>
               </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="block text-slate-700 text-sm font-semibold">ความสำคัญ (Priority)</label>
-              <div className="flex gap-3">
-                {(['Medium', 'High'] as const).map((p) => (
-                  <label key={p} className="flex-1 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="priority"
-                      value={p}
-                      checked={form.priority === p}
-                      onChange={() => setForm((prev) => ({ ...prev, priority: p }))}
-                      className="hidden peer"
-                    />
-                    <div className="flex items-center justify-center h-11 rounded-lg border border-slate-200 peer-checked:bg-[#6467f2]/10 peer-checked:border-[#6467f2] peer-checked:text-[#6467f2] text-slate-600 font-medium transition-all">
-                      {p === 'High' ? 'สูง' : 'ปานกลาง'}
-                    </div>
-                  </label>
-                ))}
+              <div className="flex flex-col gap-1.5">
+                <label className="text-slate-700 text-sm font-semibold">Priority</label>
+                <select
+                  className="h-11 w-full rounded-lg border border-slate-200 focus:border-[#6467f2] focus:ring-2 focus:ring-[#6467f2]/20 text-slate-900 text-sm px-3 transition-all outline-none"
+                  value={form.priority}
+                  onChange={(e) => setForm((p) => ({ ...p, priority: e.target.value }))}
+                >
+                  <option value="High">🔥 High</option>
+                  <option value="Medium">⚡ Medium</option>
+                </select>
               </div>
             </div>
           </div>
 
           {/* Footer */}
-          <footer className="p-6 border-t border-slate-100 flex items-center justify-end gap-3 bg-slate-50/50">
+          <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex items-center justify-end gap-3">
             <button
               type="button"
               onClick={onClose}
-              className="px-6 h-11 rounded-lg text-slate-600 font-bold hover:bg-slate-200/50 transition-colors"
+              className="px-5 py-2.5 rounded-lg text-slate-600 font-semibold text-sm hover:bg-slate-200 transition-colors"
             >
-              ยกเลิก
+              Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="px-8 h-11 rounded-lg bg-[#6467f2] text-white font-bold hover:bg-[#6467f2]/90 shadow-lg shadow-[#6467f2]/20 transition-all flex items-center gap-2 disabled:opacity-60"
+              className="px-5 py-2.5 rounded-lg bg-[#6467f2] text-white font-semibold text-sm hover:bg-[#6467f2]/90 shadow-sm shadow-[#6467f2]/20 transition-all flex items-center gap-2 disabled:opacity-60"
             >
-              <span className="material-symbols-outlined text-[18px]">save</span>
-              {loading ? 'กำลังบันทึก...' : 'บันทึกข้อมูล'}
+              <span>{loading ? 'Saving...' : 'Add Keyword'}</span>
+              {!loading && <span className="material-symbols-outlined text-[18px]">add</span>}
             </button>
-          </footer>
+          </div>
         </form>
       </div>
     </div>
