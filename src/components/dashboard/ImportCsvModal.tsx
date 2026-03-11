@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef } from 'react'
+import Link from 'next/link'
 import { Keyword } from '@/types'
 import Papa from 'papaparse'
 
@@ -170,9 +171,9 @@ export default function ImportCsvModal({ onClose, onSuccess }: Props) {
               </div>
               <input ref={fileRef} type="file" accept=".csv" className="hidden" onChange={handleFileChange} />
               <div className="text-center">
-                <a href="/api/keywords/template" className="text-xs font-bold text-[#6467f2] hover:underline">
+                <Link href="/api/keywords/template" className="text-xs font-bold text-[#6467f2] hover:underline">
                   Download CSV template
-                </a>
+                </Link>
               </div>
             </div>
           )}

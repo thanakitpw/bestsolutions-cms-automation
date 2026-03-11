@@ -17,20 +17,26 @@ export async function POST(req: NextRequest) {
 
   if (!article) return NextResponse.json({ error: 'Article not found' }, { status: 404 })
 
-  const prompt = `สร้าง image generation prompt (ภาษาอังกฤษ) สำหรับรูปปกบทความ
+  const prompt = `สร้าง image generation prompt (ภาษาอังกฤษ) สำหรับรูปปกบทความ SEO
 
 ชื่อบทความ: ${article.title}
 Cluster: ${article.cluster}
 Primary Keyword: ${article.primary_keyword}
 
-Style ที่ต้องใช้ (CI ของ Best Solutions Corp):
-- Deep navy blue background (#0B1437 หรือ #101122)
-- Neon cyan/electric blue accent (#00D4FF หรือ #38BDF8)
-- Minimal, clean, professional tech aesthetic
-- Abstract geometric shapes หรือ data visualization elements
-- NO people, NO faces, NO text in image
+สไตล์ที่ต้องการ (ดูจากรูปตัวอย่าง):
+- Deep navy blue gradient background (จากมุมซ้ายบนเข้มสุด #0B1437 ไล่ไปขวาล่างเข้า #1a1040 มี hint สีแดงเข้มมุมซ้ายล่าง)
+- ข้อความชื่อบทความภาษาไทย "${article.title}" แสดงเป็น bold typography ขนาดใหญ่ บริเวณบน-ซ้ายของรูป ครึ่งแรกสีขาว ครึ่งหลังสีฟ้า neon cyan (#00D4FF)
+- ใต้ข้อความไทย มีข้อความภาษาอังกฤษที่เป็นแปลของชื่อบทความ ขนาดเล็กกว่า สี slate gray
+- ด้านล่าง-ขวา มี abstract tech illustration ที่เกี่ยวข้องกับเนื้อหาบทความ (เช่น charts, upward arrows, rockets, cloud icons, data visualization, browser windows, circuit board lines) สี neon cyan/electric blue กับ purple accents
+- Subtle geometric grid lines เป็น pattern จางๆ ทั่วรูป
+- Glow effects, particle dots, light streaks
+- มี diamond shape icon เล็กๆ มุมขวาล่าง สี cyan (logo mark)
+- Professional, corporate, modern tech aesthetic
+- 16:9 aspect ratio, 1200x630px
+- NO people, NO faces, NO photographs
 
-ตอบด้วย prompt ภาษาอังกฤษ 1 ย่อหน้า (50-80 คำ) พร้อมใช้ใน Midjourney/Stable Diffusion ได้ทันที
+ตอบด้วย prompt ภาษาอังกฤษ 1 ย่อหน้า (60-100 คำ) พร้อมใช้ใน Midjourney/DALL-E ได้ทันที
+เพิ่ม --ar 16:9 --v 6 ท้าย prompt
 ห้ามอธิบายเพิ่มเติม ให้ตอบแค่ prompt เท่านั้น`
 
   const msg = await anthropic.messages.create({

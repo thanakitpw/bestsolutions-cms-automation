@@ -23,7 +23,6 @@ function runSeoChecklist(
   metaDesc: string,
   contentType: string
 ) {
-  const lower = content.toLowerCase()
   const kwLower = (primaryKeyword ?? '').toLowerCase()
   const words = content.trim() ? content.trim().split(/\s+/) : []
   const first100 = words.slice(0, 100).join(' ').toLowerCase()

@@ -46,6 +46,7 @@ export default async function ArticlesPage() {
               <thead>
                 <tr className="border-b border-slate-100 bg-slate-50/50">
                   <th className="px-6 py-3 font-semibold text-slate-500">บทความ</th>
+                  <th className="px-6 py-3 font-semibold text-slate-500">Keyword</th>
                   <th className="px-6 py-3 font-semibold text-slate-500">Cluster</th>
                   <th className="px-6 py-3 font-semibold text-slate-500">Type</th>
                   <th className="px-6 py-3 font-semibold text-slate-500">Status</th>
@@ -61,6 +62,12 @@ export default async function ArticlesPage() {
                       <td className="px-6 py-4">
                         <p className="font-semibold text-slate-900 line-clamp-1">{art.title ?? art.slug}</p>
                         <p className="text-xs text-slate-400 mt-0.5 font-mono">{art.slug}</p>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className="inline-flex items-center gap-1 px-2 py-1 bg-[#6467f2]/10 text-[#6467f2] text-xs font-medium rounded">
+                          <span className="material-symbols-outlined text-sm">key</span>
+                          {art.primary_keyword ?? '—'}
+                        </span>
                       </td>
                       <td className="px-6 py-4 text-slate-600 text-xs">{art.cluster ?? '—'}</td>
                       <td className="px-6 py-4 text-slate-500 text-xs">{art.content_type ?? '—'}</td>
